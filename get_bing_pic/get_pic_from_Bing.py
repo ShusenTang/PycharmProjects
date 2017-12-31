@@ -20,7 +20,7 @@ def GetPicURL(Bing_URL):
     h = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
                              'Chrome/51.0.2704.63 Safari/537.36'}  # 浏览器伪装
     html = requests.get(Bing_URL,headers = h).text
-    tmp = re.findall("g_img={url:(.*?)}", html)[0]     # 正则模式匹配这里没搞好，故下面还要分割一下。。。
+    tmp = re.findall("g_img={url:(.*?)}", html)[0] # 正则模式匹配这里没搞好，故下面还要分割一下。。。
     ls = re.split(r'"',tmp)
     return Bing_URL+ls[1]
 
@@ -31,10 +31,10 @@ def Get_Pic(Pic_URL,folder_path):
     if os.path.exists(pic_path):
         print '已存在今日图片！'
     else:
-        if len(os.listdir(folder_path)) > 30:     #如果文件夹里有很多之前的图片，可将其清空
-            for jpg in os.listdir(folder_path):
-                jpg_path = os.path.join(folder_path,jpg) #取图片路径
-                os.remove(jpg_path)
+        # 由于设置要桌面所以把之前的图片删除否则可能会设置成以前的
+        for jpg in os.listdir(folder_path):
+            jpg_path = os.path.join(folder_path,jpg) #取图片路径
+            os.remove(jpg_path)
 
         print '正在存储今日图片。。。。'
         try:
@@ -48,13 +48,13 @@ def Get_Pic(Pic_URL,folder_path):
 if __name__ == '__main__':
     BingURL = "https://cn.bing.com"
     pic_file_folder_path = r'/Users/tang/PycharmProjects/get_bing_pic/pictures'
-    Create_file_folder(pic_file_folder_path)        # 必要时创建文件夹
+    Create_file_folder(pic_file_folder_path)  # 必要时创建存储图片的文件夹
     pic_url = ""
     try:
-        pic_url = GetPicURL(BingURL)                # 获取今天Bing图片的地址
-        Get_Pic(pic_url,pic_file_folder_path)       # 获得图片并存储
-    except:                                         # 如果网络异常的话什么都不做
-        pass
+        pic_url = GetPicURL(BingURL)          # 获取今天Bing图片的地址
+        Get_Pic(pic_url,pic_file_folder_path) # 获得图片并存储
+    except:
+        pass                                  # 如果网络异常的话什么都不做
 
 
 
