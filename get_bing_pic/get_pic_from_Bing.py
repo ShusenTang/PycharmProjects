@@ -17,12 +17,12 @@ def Create_file_folder(path):
             print "文件夹建立失败！！！"
 
 def GetPicURL(Bing_URL):
+    Bing_API_URL = 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'  #bing官方API
     h = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                             'Chrome/51.0.2704.63 Safari/537.36'}  # 浏览器伪装
-    html = requests.get(Bing_URL,headers = h).text
-    tmp = re.findall("g_img={url:(.*?)}", html)[0] # 正则模式匹配这里没搞好，故下面还要分割一下。。。
-    ls = re.split(r'"',tmp)
-    return Bing_URL+ls[1]
+                       'Chrome/51.0.2704.63 Safari/537.36'}  # 浏览器伪装
+    html = requests.get(Bing_API_URL, headers=h).text
+    tmp = re.findall('url\":\"(.*?)","urlbase', html)[0]  #正则模式匹配取得图片地址
+    return Bing_URL + tmp
 
 def Get_Pic(Pic_URL,folder_path):
     pic = requests.get(Pic_URL)
