@@ -17,7 +17,7 @@ def Create_file_folder(path):
             print "文件夹建立失败！！！"
 
 def GetPicURL(Bing_URL):
-    Bing_API_URL = 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'  #bing官方API
+    Bing_API_URL = 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1' #bing官方API，idx = 0是今天的,1是昨天，-1是明天的，以此类推...
     h = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
                        'Chrome/51.0.2704.63 Safari/537.36'}  # 浏览器伪装
     html = requests.get(Bing_API_URL, headers=h).text
